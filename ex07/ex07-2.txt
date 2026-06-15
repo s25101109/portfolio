@@ -43,7 +43,7 @@ Save the document and take a look at it in a browser. You should see that the li
 		margin: .25em;
 	}
 	#nav ul a:focus {
-		color:#fc6
+		color:#fc6;
 		border-color: #fff;
 	}
 	#nav ul a:hover {
