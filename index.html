@@ -110,10 +110,12 @@
     <h2>GitHub 專案目錄瀏覽器</h2>
     
     <div class="search-box">
-        <input type="text" id="repoUrl" placeholder="請輸入 GitHub 網址 或 格式如: owner/repo (例如: facebook/react)" value="s25101109/portfolio">
+        <!-- 這裡已將 value 預設值修改為 s25101109/portfolio -->
+        <input type="text" id="repoUrl" placeholder="請輸入 GitHub 網址 或 格式如: owner/repo" value="s25101109/portfolio">
         <button onclick="loadRepo()">讀取目錄</button>
     </div>
 
+    <!-- 顯示目錄樹的容器 -->
     <div id="tree-container"></div>
 </div>
 
@@ -150,11 +152,11 @@
             container.innerHTML = ""; // 清空 loading
             container.appendChild(rootUl);
         } catch (error) {
-            container.innerHTML = `<p class="error">讀取失敗：${error.message} (請檢查專案是否存在或是否達到 API 限制)</p>`;
+            container.innerHTML = `<p class="error">讀取失敗：${error.message} (請檢查專案是否為公開專案、或是否達到 GitHub API 的每小時請求限制)</p>`;
         }
     }
 
-    // 核心：向 GitHub API 請求特定路徑的資料並生成 UI
+    // 向 GitHub API 請求特定路徑的資料並生成 UI
     async function fetchDirectory(owner, repo, path = "") {
         const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
         const response = await fetch(url);
@@ -193,7 +195,7 @@
                 itemDiv.onclick = async (e) => {
                     e.stopPropagation(); // 防止事件冒泡
                     
-                    // 如果已經載入過，做顯示/隱藏的切換即可
+                    // 如果已經載入過，做顯示/隱藏的切換
                     if (isLoaded) {
                         if (subUl) {
                             subUl.style.display = subUl.style.display === 'none' ? 'block' : 'none';
@@ -216,7 +218,7 @@
                         itemDiv.querySelector('.icon').innerText = '📂'; // 展開圖示
                     } catch (err) {
                         alert('無法載入子目錄: ' + err.message);
-                    } finally {
+                    } finaly {
                         loadingSpan.remove();
                     }
                 };
